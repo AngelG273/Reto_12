@@ -36,5 +36,35 @@ print(resultado)  # Salida: {'b': 2, 'c': 3, 'd': 30, 'a': 1}
 ```
 - Ejercicio 5:
 ```Python
+import requests
 
+# Función para obtener datos de una API y extraer pares clave: valor
+def obtener_datos_api(url):
+    response = requests.get(url)
+    
+    if response.status_code == 200:  # Verificar si la petición fue exitosa
+        datos = response.json()  # Convertir la respuesta a JSON
+        print(f"\nDatos de la API ({url}):\n", datos)  # Imprimir el JSON completo
+        print("\nPares clave: valor extraídos:\n")
+        
+        # Imprimir los pares clave-valor de forma organizada
+        for clave, valor in datos.items():
+            print(f"{clave}: {valor}")
+        
+        return datos
+    else:
+        print(f"Error al conectar con la API: {url}")
+        return None
+
+# URLs de 3 APIs públicas
+apis = [
+    "https://api.coindesk.com/v1/bpi/currentprice.json",  # Precio actual de Bitcoin
+    "https://dog.ceo/api/breeds/image/random",           # Imagen aleatoria de un perro
+    "https://api.agify.io/?name=michael"                # Predicción de edad según nombre
+]
+
+# Conectarse a cada API e imprimir los resultados
+for url in apis:
+    obtener_datos_api(url)
+    print("=" * 50)  # Separador visual
 ```
